@@ -1,0 +1,38 @@
+﻿@model WebApplication2.Models.Partij
+
+@{
+    ViewData["Title"] = "CreateSpecial";
+}
+
+<h2>CreateSpecial</h2>
+
+<h4>Partij</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h2>Uitslag partij van @(Model.Player.Name) op @(Model.Dag)</h2>
+        <form asp-action="Create">
+            <input asp-for="PlayerId" type="hidden" />
+            <input asp-for="Dag" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Uitslag" class="control-label"></label>
+                <select asp-for="Uitslag" asp-items="@(new SelectList(ViewBag.Uitslagen))" class="form-control">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Uitslag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

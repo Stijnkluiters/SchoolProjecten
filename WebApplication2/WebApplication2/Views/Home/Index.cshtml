@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    @foreach (var dag in ViewBag.dagen)
+                    {
+
+                        <th>
+                            @dag
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Player speler in ViewBag.players)
+                {
+                    var style = (speler.isRecentlyAdded) ? "bg-danger" : "";
+                    <tr class="@style">
+                        <td>@speler.Name</td>
+                        @foreach (var dag in ViewBag.dagen)
+                        {
+                            
+                            if (speler.hasPlayedDay(dag))
+                            {
+                                <td>@speler.getPartijFromDay(dag).Uitslag</td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a asp-action="CreateSpecial" asp-controller="Partij" asp-route-day="@dag" asp-route-playerId="@speler.Id">?</a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <a class="btn btn-primary" asp-action="Create" asp-controller="Players">Speler toevoegen</a>
+    </div>
+</div>
